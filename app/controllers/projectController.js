@@ -1,17 +1,27 @@
-let projects = [
-    {title:"ay 7aga", URL:"btngan.com"},
-    {title:"asdasd", URL:"btngan.com"},
-    {title:"ay 7aga", URL:"btngan.com"},
-];
+let Project = require('../models/Project');
 
 let projectController = {
+    
     getAllProjects:function(req, res){
-        res.send(projects);
+        
+        Project.find(function(err, projects){
+            
+            if(err)
+                res.send(err.message);
+            else
+                res.send(projects);
+        })
     },
+
     createProject:function(req, res){
-        let project = req.body;
-        projects.push(project);
-        res.send("your project " + project.name + " has been added succesfully");
+        let project = new Project(req.body);
+
+        project.save(function(err, project){
+            if(err)
+                res.send(err.message)
+            else
+                res.send("your project " + project.title + " has been added succesfully");
+        })
     }
 }
 
