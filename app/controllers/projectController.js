@@ -9,7 +9,7 @@ let projectController = {
             if(err)
                 res.send(err.message);
             else
-                res.send(projects);
+                res.render('index', {projects});
         })
     },
 
@@ -17,10 +17,15 @@ let projectController = {
         let project = new Project(req.body);
 
         project.save(function(err, project){
-            if(err)
+            if(err){
                 res.send(err.message)
-            else
-                res.send("your project " + project.title + " has been added succesfully");
+                console.log(err);
+            }
+            else{
+
+                console.log(project);
+                res.redirect('/');
+            }
         })
     }
 }
